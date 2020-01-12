@@ -55,7 +55,7 @@ export default function Breadcrumb() {
         </Link>
         {paths.map(path => {
           return (
-            <Link color="inherit" href={`/${path.link}`}>
+            <Link key={`${path.link}_${path.label}`} color="inherit" href={`/${path.link}`}>
               {path.label}
             </Link>
           )

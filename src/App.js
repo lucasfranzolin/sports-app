@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <Grid container direction="column" xs={12}>
+      <Grid container direction="column">
         <Grid item xs={12}>
           <TopBar />
         </Grid>
@@ -29,7 +29,7 @@ function App() {
           <Breadcrumb />
         </Grid>
       </Grid>
-      <Grid container xs={12}>
+      <Grid container>
         <Switch>
           {routes.map(route => {
             return <Route exact key={route.component} path={route.path} component={route.component} />

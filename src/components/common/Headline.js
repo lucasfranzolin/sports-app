@@ -27,9 +27,9 @@ export default function Headline({banners}) {
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="flex-start" alignItems="center">
-        {banners.map(banner => {
+        {banners.map((banner, index) => {
           return (
-            <Grid item container spacing={2} xs={3}>
+            <Grid item container spacing={2} xs={3} key={`${banner.primaryText}_${banner.secondaryText}_${index}`}>
               <Grid item>
                 <FontAwesomeIcon size="4x" color="#3ac5a9" icon={banner.icon} />
               </Grid>

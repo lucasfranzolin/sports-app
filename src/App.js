@@ -23,7 +23,7 @@ function App() {
     <div className={classes.root}>
       <Grid container direction="column">
         <Grid item xs={12}>
-          <TopBar />
+          <TopBar name="Lucas Franzolin" />
         </Grid>
         <Grid item xs={12}>
           <Breadcrumb />

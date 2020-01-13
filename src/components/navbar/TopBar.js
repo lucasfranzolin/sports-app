@@ -38,7 +38,7 @@ const styles = makeStyles(theme => ({
   },
 }))
 
-export default function TopBar() {
+export default function TopBar({name}) {
   const classes = styles()
 
   const anchorRef = useRef(null)
@@ -78,7 +78,12 @@ export default function TopBar() {
       </Grid>
       <Grid item container xs={3} justify="flex-end">
         <Grid item>
-          <Avatar>LF</Avatar>
+          <Avatar>
+            {name
+              .split(' ')
+              .map((n, i, a) => (i === 0 || i + 1 === a.length ? n[0] : null))
+              .join('')}
+          </Avatar>
         </Grid>
         <Grid item>
           <Button
@@ -88,7 +93,7 @@ export default function TopBar() {
             onClick={handleToggle}
             className={classes.button}
             endIcon={<FontAwesomeIcon icon={faChevronDown} />}>
-            Lucas Franzolin
+            {name}
           </Button>
           <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
             {({TransitionProps, placement}) => (

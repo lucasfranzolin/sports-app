@@ -45,7 +45,6 @@ export default function Breadcrumb() {
     })
     i++
   }
-  console.log('paths', paths)
 
   return (
     <div className={classes.container}>

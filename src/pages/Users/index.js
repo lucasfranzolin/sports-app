@@ -24,52 +24,57 @@ const columns = [
   {
     id: 'username',
     label: 'Username',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'name',
     label: 'Name',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'email',
     label: 'E-mail',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'city',
     label: 'City',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'rig',
     label: 'Ride in Group',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'dotw',
     label: 'Day of the week',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'posts',
     label: 'Posts',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'albuns',
     label: 'Albuns',
-    minWidth: 170,
+    minWidth: 100,
   },
   {
     id: 'photos',
     label: 'Photos',
-    minWidth: 170,
+    minWidth: 100,
+  },
+  {
+    id: 'actionDelete',
+    label: '',
+    minWidth: 50,
   },
 ]
 
-function createData(username, name, email, city, rig, dotw, posts, albuns, photos) {
-  return {username, name, email, city, rig, dotw, posts, albuns, photos}
+function createData(username, name, email, city, rig, dotw, posts, albuns, photos, btnDel) {
+  return {username, name, email, city, rig, dotw, posts, albuns, photos, btnDel}
 }
 
 const styles = makeStyles(theme => ({
@@ -86,12 +91,29 @@ export default function Users() {
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([
+    createData('username', 'name', 'email', 'city', 'rig', 'dotw', 'posts', 'albuns', 'photos'),
+    createData('username1', 'name1', 'email1', 'city1', 'rig1', 'dotw1', 'posts1', 'albuns1', 'photos1'),
+    createData('username2', 'name2', 'email2', 'city2', 'rig2', 'dotw2', 'posts2', 'albuns2', 'photos2'),
+    createData('username3', 'name3', 'email3', 'city3', 'rig3', 'dotw3', 'posts3', 'albuns3', 'photos3'),
+  ])
 
   useEffect(() => {
-    api.get.users
-      .then(data => {
-        console.log('data', data)
+    const promise0 = api.get.users
+    const promise1 = api.get.photos
+    const promise2 = api.get.posts
+    const promise3 = api.get.albuns
+    const promise4 = api.get.rideInGroup
+    const promise5 = api.get.dayOfTheWeek
+
+    Promise.all([promise0, promise1, promise2, promise3, promise4, promise5])
+      .then(results => {
+        const users = results[0]
+        const photos = results[1]
+        const posts = results[2]
+        const albuns = results[3]
+        const rideInGroup = results[4]
+        const dayOfTheWeek = results[5]
       })
       .catch(err => console.error(err))
   }, [])

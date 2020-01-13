@@ -12,13 +12,13 @@ const api = {
     users: axios.get('https://jsonplaceholder.typicode.com/users').then(response => response.data),
     photos: axios.get('https://jsonplaceholder.typicode.com/photos').then(response => response.data),
     posts: axios.get('https://jsonplaceholder.typicode.com/posts').then(response => response.data),
-    albuns: Promise((resolve, reject) => {
+    albuns: new Promise((resolve, reject) => {
       resolve(mockAlbuns)
     }),
-    rideInGroup: Promise((resolve, reject) => {
+    rideInGroup: new Promise((resolve, reject) => {
       resolve(mockRideInGroup)
     }),
-    dayOfTheWeek: Promise((resolve, reject) => {
+    dayOfTheWeek: new Promise((resolve, reject) => {
       resolve(mockDayOfTheWeek)
     }),
   },

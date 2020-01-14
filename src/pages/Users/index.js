@@ -34,45 +34,45 @@ function createData(username, name, email, city, rig, dotw, posts, albuns, photo
 
 function createRows(users, photos, posts, albuns, rideInGroup, dayOfTheWeek) {
   let postsCounter = {}
-  posts.map(post => {
+  for (let post of posts) {
     if (!(post.userId in postsCounter)) {
-      return (postsCounter[post.userId] = 1)
+      postsCounter[post.userId] = 1
     } else {
-      return (postsCounter[post.userId] += 1)
+      postsCounter[post.userId] += 1
     }
-  })
+  }
 
   let usersRideOption = {}
-  rideInGroup.map(rideOption => {
-    return (usersRideOption[rideOption.userId] = rideOption.rideInGroup)
-  })
+  for (let ride of rideInGroup) {
+    usersRideOption[ride.userId] = ride.rideInGroup
+  }
 
   let usersDaysOfTheWeek = {}
-  dayOfTheWeek.map(daysOption => {
-    return (usersDaysOfTheWeek[daysOption.userId] = daysOption.daysOfTheWeek)
-  })
+  for (let day of dayOfTheWeek) {
+    usersDaysOfTheWeek[day.userId] = day.daysOfTheWeek
+  }
 
   let usersAlbuns = {}
-  albuns.map(album => {
+  for (let album of albuns) {
     if (!(album.userId in usersAlbuns)) {
-      return (usersAlbuns[album.userId] = 1)
+      usersAlbuns[album.userId] = 1
     } else {
-      return (usersAlbuns[album.userId] += 1)
+      usersAlbuns[album.userId] += 1
     }
-  })
+  }
 
   let usersPhotos = {}
-  albuns.map(album => {
+  for (let album of albuns) {
     if (!(album.userId in usersPhotos)) {
-      return (usersPhotos[album.userId] = album.photos.length)
+      usersPhotos[album.userId] = album.photos.length
     } else {
-      return (usersPhotos[album.userId] += album.photos.length)
+      usersPhotos[album.userId] += album.photos.length
     }
-  })
+  }
 
   let rows = []
-  users.map(user => {
-    return rows.push(
+  for (let user of users) {
+    rows.push(
       createData(
         user.username,
         user.name,
@@ -85,7 +85,7 @@ function createRows(users, photos, posts, albuns, rideInGroup, dayOfTheWeek) {
         usersPhotos[user.id],
       ),
     )
-  })
+  }
 
   return rows
 }
@@ -162,10 +162,54 @@ export default function Users() {
         const dayOfTheWeek = results[5]
         const rows = createRows(users, photos, posts, albuns, rideInGroup, dayOfTheWeek)
         console.log('users', rows)
-        setUsers(rows)
-        setFiltered(rows)
+        getLocalStorage(rows)
       })
       .catch(err => console.error(err))
+  }
+
+  const getLocalStorage = rows => {
+    const localKeys = Object.keys(localStorage)
+    if (localKeys.length > 0) {
+      for (let key in localStorage) {
+        let localItem = localStorage.getItem(key)
+        if (localItem !== null) {
+          let strArr = localItem.split(',')
+          let username = strArr[0]
+          let name = strArr[1]
+          let email = strArr[2]
+          let city = strArr[3]
+          let rig = strArr[4]
+
+          let dotw = ''
+          let mon = strArr[5]
+          let tue = strArr[6]
+          let wed = strArr[7]
+          let thu = strArr[8]
+          let fri = strArr[9]
+          let sat = strArr[10]
+          let sun = strArr[11]
+
+          let auxArr = strArr.splice(5)
+
+          if (mon && tue && wed && thu && fri) {
+            dotw = 'Weekdays'
+          } else if (mon && tue && wed && thu && fri && sat && sun) {
+            dotw = 'Everyday'
+          } else {
+            dotw = ''
+            for (let day in auxArr) {
+              if (dotw === '') dotw = day
+              else dotw = `${dotw} ${day}`
+            }
+          }
+          let newRow = createData(username, name, email, city, rig, dotw, 0, 0, 0)
+          console.log('newRow', newRow)
+          rows.push(newRow)
+        }
+      }
+      setUsers(rows)
+      setFiltered(rows)
+    }
   }
 
   const handleClose = () => {

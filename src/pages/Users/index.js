@@ -131,7 +131,7 @@ export default function Users() {
 
   useEffect(() => {
     getUsers()
-  }, [])
+  })
 
   useEffect(() => {
     if (search === '') {

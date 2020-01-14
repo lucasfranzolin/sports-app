@@ -161,7 +161,6 @@ export default function Users() {
         const rideInGroup = results[4]
         const dayOfTheWeek = results[5]
         const rows = createRows(users, photos, posts, albuns, rideInGroup, dayOfTheWeek)
-        console.log('users', rows)
         getLocalStorage(rows)
       })
       .catch(err => console.error(err))
@@ -203,13 +202,13 @@ export default function Users() {
             }
           }
           let newRow = createData(username, name, email, city, rig, dotw, 0, 0, 0)
-          console.log('newRow', newRow)
           rows.push(newRow)
         }
       }
-      setUsers(rows)
-      setFiltered(rows)
     }
+    console.log('users', rows)
+    setUsers(rows)
+    setFiltered(rows)
   }
 
   const handleClose = () => {
